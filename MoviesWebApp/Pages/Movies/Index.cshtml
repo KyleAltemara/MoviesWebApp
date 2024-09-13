@@ -10,51 +10,86 @@
 <p>
     <a asp-page="Create">Create New</a>
 </p>
+
+<form method="get">
+    <p>
+        Title: <input type="text" name="SearchString" value="@Model.SearchString" />
+        Genre:
+        <select name="GenreFilter">
+            <option value="">All</option>
+            @foreach (var genre in Model.Genres)
+            {
+                <option value="@genre" asp-selected="@(genre == Model.GenreFilter)">@genre</option>
+            }
+        </select>
+        Rating:
+        <select name="RatingFilter">
+            <option value="">All</option>
+            @foreach (var rating in Model.Ratings)
+            {
+                <option value="@rating" asp-selected="@(rating == Model.RatingFilter)">@rating</option>
+            }
+        </select>
+        <input type="submit" value="Filter" />
+    </p>
+</form>
+
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Movies[0].Title)
+                <a asp-page="./Index" asp-route-sortOrder="@(Model.SortOrder == "title" ? "title_desc" : "title")">
+                    @Html.DisplayNameFor(model => model.Movies[0].Title)
+                </a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Movies[0].ReleaseDate)
+                <a asp-page="./Index" asp-route-sortOrder="@(Model.SortOrder == "date" ? "date_desc" : "date")">
+                    @Html.DisplayNameFor(model => model.Movies[0].ReleaseDate)
+                </a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Movies[0].Price)
+                <a asp-page="./Index" asp-route-sortOrder="@(Model.SortOrder == "price" ? "price_desc" : "price")">
+                    @Html.DisplayNameFor(model => model.Movies[0].Price)
+                </a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Movies[0].Genre)
+                <a asp-page="./Index" asp-route-sortOrder="@(Model.SortOrder == "genre" ? "genre_desc" : "genre")">
+                    @Html.DisplayNameFor(model => model.Movies[0].Genre)
+                </a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Movies[0].Rating)
+                <a asp-page="./Index" asp-route-sortOrder="@(Model.SortOrder == "rating" ? "rating_desc" : "rating")">
+                    @Html.DisplayNameFor(model => model.Movies[0].Rating)
+                </a>
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Movies) {
-    <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ReleaseDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Genre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Rating)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.Movies)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ReleaseDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Genre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Rating)
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

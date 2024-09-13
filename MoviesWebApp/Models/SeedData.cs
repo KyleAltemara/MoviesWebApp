@@ -7,14 +7,11 @@ public static class SeedData
 {
     public static void Initialize(IServiceProvider serviceProvider)
     {
-        using var context = new MoviesWebAppContext(serviceProvider.GetRequiredService<DbContextOptions<MoviesWebAppContext>>());
-        if (context == null || context.Movies == null)
-        {
-            throw new ArgumentNullException("Null RazorPagesMovieContext");
-        }
+        using var context = new MoviesWebAppContext(serviceProvider.GetRequiredService<DbContextOptions<MoviesWebAppContext>>()) ?? 
+            throw new ArgumentNullException(nameof(serviceProvider), "Null MoviesWebAppContext");
 
         // Look for any movies.
-        if (context.Movies.Any())
+        if (context.Movies?.Any() ?? throw new ArgumentNullException(nameof(serviceProvider), "Null Movies property"))
         {
             return;   // DB has been seeded
         }
@@ -54,8 +51,7 @@ public static class SeedData
                 Genre = "Western",
                 Price = 3.99M,
                 Rating = "NA"
-            },
-
+            }
         );
         context.SaveChanges();
     }
