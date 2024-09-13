@@ -7,9 +7,7 @@ public static class SeedData
 {
     public static void Initialize(IServiceProvider serviceProvider)
     {
-        using var context = new MoviesWebAppContext(
-            serviceProvider.GetRequiredService<
-                DbContextOptions<MoviesWebAppContext>>());
+        using var context = new MoviesWebAppContext(serviceProvider.GetRequiredService<DbContextOptions<MoviesWebAppContext>>());
         if (context == null || context.Movies == null)
         {
             throw new ArgumentNullException("Null RazorPagesMovieContext");
@@ -58,50 +56,6 @@ public static class SeedData
                 Rating = "NA"
             },
 
-            new Movie
-            {
-                Title = "The Magnificent Seven",
-                ReleaseDate = DateTime.Parse("1960-4-23"),
-                Genre = "Western",
-                Price = 3.99M,
-                Rating = "NA"
-            },
-
-            new Movie
-            {
-                Title = "The Big Country",
-                ReleaseDate = DateTime.Parse("1958-10-1"),
-                Genre = "Western",
-                Price = 3.99M,
-                Rating = "NA"
-            },
-
-            new Movie
-            {
-                Title = "The Long Riders",
-                ReleaseDate = DateTime.Parse("1980-5-16"),
-                Genre = "Western",
-                Price = 3.99M,
-                Rating = "NA"
-            },
-
-            new Movie
-            {
-                Title = "Tombstone",
-                ReleaseDate = DateTime.Parse("1993-12-25"),
-                Genre = "Western",
-                Price = 3.99M,
-                Rating = "NA"
-            },
-
-            new Movie
-            {
-                Title = "The Good, the Bad and the Ugly",
-                ReleaseDate = DateTime.Parse("1966-12-23"),
-                Genre = "Western",
-                Price = 3.99M,
-                Rating = "NA"
-            }
         );
         context.SaveChanges();
     }
